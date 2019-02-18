@@ -1,0 +1,204 @@
+<!--
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-02-18 10:48:44
+ * @LastEditTime: 2019-02-18 13:41:50
+ * @LastEditors: Please set LastEditors
+ -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!-- import CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <style>
+        .tip{
+            font-size:12px;
+            text-align: right;
+            color:#979191ee;
+            line-height:38px;
+            margin-left:10px;
+        }
+        .bottom{
+            display:flex;
+            justify-content:flex-end;
+            margin-top:10px;
+            
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+
+        <el-row :gutter="40">
+            <el-col :span="12" >
+                <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+                    <el-form-item label="店名" prop="name">
+                        <el-input v-model="ruleForm.name"></el-input>
+                    </el-form-item>
+                    <el-form-item label="活动区域" prop="region">
+                        <el-input v-model="ruleForm.region"></el-input>
+                    </el-form-item>
+                    <el-form-item label="类型" prop="type">
+                        <el-checkbox-group v-model="ruleForm.type">
+                            <el-checkbox label="美食" name="type"></el-checkbox>
+                        </el-checkbox-group>
+                    </el-form-item>
+                    <el-form-item label="菜名" prop="food">
+                        <el-input v-model="ruleForm.food1"></el-input>
+                        <el-input v-model="ruleForm.food2"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @click="submitForm('ruleForm')">立即生成</el-button>
+                        <el-button @click="resetForm('ruleForm')">重置</el-button>
+                    </el-form-item>
+                </el-form>
+            </el-col>
+            <el-col :span="12">
+                <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入内容" class="copy"
+                    v-model="result">
+                </el-input>
+               
+               <div class="bottom"> 
+                    <el-button @click="copy">copy</el-button>
+                    <span class="tip"> 字数{{result.length}}</span>
+               </div>
+            </el-col>
+        </el-row>
+
+    </div>
+</body>
+<!-- import Vue before Element -->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- import JavaScript -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js'></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                ruleForm: {
+                    name: '',
+                    region: '',
+                    type: [],
+                    food1:'',
+                    food2:''
+                },
+                result: '',
+                rules: {
+                    name: [
+                        { required: true, message: '请输入名称', trigger: 'blur' },
+                    ],
+                    region: [
+                        { required: true, message: '请选择活动区域', trigger: 'change' }
+                    ],
+                    type: [
+                        { type: 'array', required: true, message: '请至少选择一个类型', trigger: 'change' }
+                    ],
+                },
+                commentsName: [
+                    '',
+                    '这家name很好吃,墙裂推荐',
+                    '早就听说过这家name了,一直心心念念的想来吃',
+
+                ],
+                commentsRegion: [
+                    '',
+                    '地址超级好找,就在region',
+                    '终于来到了region'
+                ],
+                commentsType: [
+                    '',
+                    '俗话说的好:美食人人都爱',
+                    '唯美食与爱不可辜负',
+                    '味道跟口感真心不错',
+                    '中国饮食文化历史悠久，博大精深，自此可见一斑。然而，那席山肤水豢，纵然千滋百味也只是昙花一现。欢娱过后，立即湮没于历史的长河，唯独一味辛辣的讽刺，冲破歌舞迷离，撞响了王朝的丧钟',
+                    '吃货的最高境界,眼见为食',
+                    '当吃货挺好的,吃着吃着就什么都忘了'
+                ],
+                commentsOther: [
+                    '',
+                    '服务员态度超级好,',
+                    '周围配套设施很齐全,',
+                    '下次还会再来,',
+                    '是我最喜欢的装修风格,',
+                ],
+                commentsFood1:[
+                    '',
+                    'food这道菜真的是超级超级推荐,味道超级好',
+                    '其中最推荐的还是food这道菜,味道超级好'
+                ],
+                commentsFood2:[
+                    '',
+                    '其次就是food这道菜了,味道也超级好',
+                    '其实food这道菜也不错,味道也超级好'
+                ]
+            }
+        },
+        methods: {
+            submitForm(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        this.create()
+                    }
+                });
+            },
+            resetForm(formName) {
+                this.$refs[formName].resetFields();
+            },
+            random(min, max) {
+                return Math.ceil(Math.random() * max + min)
+            },
+            create() {
+                const THAT = this;
+                let list = [];
+                list.push(THAT.getRandomText(THAT.commentsName))
+                list.push(THAT.getRandomText(THAT.commentsRegion))
+                if(THAT.ruleForm.food1){
+                    list.push(THAT.getRandomText(THAT.commentsFood1))
+                }
+                if(THAT.ruleForm.food2){
+                    list.push(THAT.getRandomText(THAT.commentsFood2))
+                }
+                list.push(THAT.getRandomText(THAT.commentsType))
+                list.push(THAT.getRandomText(THAT.commentsOther,true))
+                
+                let str = list.join(',')
+                str = str.replace(/name/g, THAT.ruleForm.name)
+                str = str.replace(/region/g, THAT.ruleForm.region)
+                if(THAT.ruleForm.food1){
+                    str = str.replace(/food/g, THAT.ruleForm.food1)
+                }
+                if(THAT.ruleForm.food2){
+                    str = str.replace(/food/g, THAT.ruleForm.food2)
+                }
+               
+                THAT.result = str;
+            },
+            getRandomText(value,isMore= false) {
+                const THAT = this;
+                if (isMore) {
+                    let len=Math.ceil(Math.random() * value.length-1)
+                    let str=value[len- 1]?value[len- 1]:'' 
+                    str+=value[len]?value[len]:''
+                    str+=value[len]?value[len+1]:''
+                    return str
+                } else {
+                    return value[THAT.random(0, value.length - 1)]
+                }
+
+            },
+            copy() {
+                var text = $(".copy textarea");
+                text.select(); // 选中文本
+                document.execCommand("copy"); // 执行浏览器复制命令
+                this.$message('copy success');
+            }
+        }
+    })
+</script>
+
+</html>
