@@ -27,12 +27,23 @@
             margin-top:10px;
             
         }
+        body{
+            background:#10202c;
+            color:#fff;
+            margin-top:100px;
+        }
+        .el-form-item__label{
+            color:#fff;
+        }
     </style>
 </head>
 
 <body>
+       
     <div id="app">
-
+          
+                  
+                  <css-doodle use="var(--rule)"></css-doodle>
         <el-row :gutter="40">
             <el-col :span="12" >
                 <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
@@ -52,7 +63,7 @@
                         <el-input v-model="ruleForm.food2"></el-input>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" @click="submitForm('ruleForm')">立即生成</el-button>
+                        <el-button type="primary" @click="submitForm('ruleForm')">立即生成(可重复点击)</el-button>
                         <el-button @click="resetForm('ruleForm')">重置</el-button>
                     </el-form-item>
                 </el-form>
@@ -84,7 +95,7 @@
                 ruleForm: {
                     name: '',
                     region: '',
-                    type: [],
+                    type: ['美食'],
                     food1:'',
                     food2:''
                 },
