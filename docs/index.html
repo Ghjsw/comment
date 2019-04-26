@@ -35,15 +35,18 @@
         .el-form-item__label{
             color:#fff;
         }
+        .el-input__inner{
+            transition:.5s all;
+        }
+        .el-input__inner:focus{
+          height:50px;
+        }
     </style>
 </head>
 
 <body>
        
     <div id="app">
-          
-                  
-                  <css-doodle use="var(--rule)"></css-doodle>
         <el-row :gutter="40">
             <el-col :span="12" >
                 <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
@@ -59,8 +62,8 @@
                         </el-checkbox-group>
                     </el-form-item>
                     <el-form-item label="菜名" prop="food">
-                        <el-input v-model="ruleForm.food1"></el-input>
-                        <el-input v-model="ruleForm.food2"></el-input>
+                        <el-input v-model="ruleForm.food1" size="small"></el-input>
+                        <el-input v-model="ruleForm.food2" size="small"></el-input>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="submitForm('ruleForm')">立即生成(可重复点击)</el-button>
@@ -69,7 +72,7 @@
                 </el-form>
             </el-col>
             <el-col :span="12">
-                <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入内容" class="copy"
+                <el-input type="textarea" :autosize="{ minRows: 12, maxRows: 4}" placeholder="请输入内容" class="copy"
                     v-model="result">
                 </el-input>
                
@@ -129,7 +132,10 @@
                     '味道跟口感真心不错',
                     '中国饮食文化历史悠久，博大精深，自此可见一斑。然而，那席山肤水豢，纵然千滋百味也只是昙花一现。欢娱过后，立即湮没于历史的长河，唯独一味辛辣的讽刺，冲破歌舞迷离，撞响了王朝的丧钟',
                     '吃货的最高境界,眼见为食',
-                    '当吃货挺好的,吃着吃着就什么都忘了'
+                    '当吃货挺好的,吃着吃着就什么都忘了',
+                    '粉红色的蛋糕 来自大自然的鲜明而清新的粉红色,涂抹在可爱的花朵上,还有灿烂的蝴蝶轻轻驻足。不是童话,却胜似童话。讨好味觉的艺术得到了淋漓尽致的发挥.',
+                    '享受美食的时间是快乐的，但是等待美食出炉的时间是最快乐的。',
+
                 ],
                 commentsOther: [
                     '',
@@ -141,7 +147,8 @@
                 commentsFood1:[
                     '',
                     'food这道菜真的是超级超级推荐,味道超级好',
-                    '其中最推荐的还是food这道菜,味道超级好'
+                    '其中最推荐的还是food这道菜,味道超级好',
+                    'food白柔嫩、肥而不腻、香鲜味美，具有香、酥、嫩的特点。'
                 ],
                 commentsFood2:[
                     '',
@@ -207,7 +214,7 @@
                 var text = $(".copy textarea");
                 text.select(); // 选中文本
                 document.execCommand("copy"); // 执行浏览器复制命令
-                this.$message('copy success');
+                this.$message({message:'快去评价吧!',type:'success'});
             }
         }
     })
