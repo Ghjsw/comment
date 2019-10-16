@@ -52,7 +52,7 @@
        
     <div id="app">
         <el-row :gutter="40">
-            <el-col :span="12" >
+            <el-col :lg="12" :md="24" >
                 <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                     <el-form-item label="店名" prop="name">
                         <el-input v-model="ruleForm.name"></el-input>
@@ -75,7 +75,7 @@
                     </el-form-item>
                 </el-form>
             </el-col>
-            <el-col :span="12">
+            <el-col :lg="12" :md="24">
                 <el-input type="textarea" :autosize="{ minRows: 12, maxRows: 4}" placeholder="请输入内容" class="copy"
                     v-model="result">
                 </el-input>
@@ -137,6 +137,8 @@
                     '',
                     '这家name很好吃,墙裂推荐',
                     '早就听说过这家name了,一直心心念念的想来吃',
+                    '味道真的不错，朋友都喜欢吃。',
+                    '今天还是比较幸运的，去了没有排队，坐下之后人瞬间好多。'
 
                 ],
                 commentsRegion: [
@@ -155,7 +157,9 @@
                     '粉红色的蛋糕 来自大自然的鲜明而清新的粉红色,涂抹在可爱的花朵上,还有灿烂的蝴蝶轻轻驻足。不是童话,却胜似童话。讨好味觉的艺术得到了淋漓尽致的发挥.',
                     '享受美食的时间是快乐的，但是等待美食出炉的时间是最快乐的。',
                     '唇齿留香',
-                    '美味异常'
+                    '美味异常',
+                    '一股浓浓的鱼香扑鼻而来，勾起了肚子里的谗虫。就酸光闻不吃，也能把人给谗倒，令人胃口大开！ ',
+                    
 
                 ],
                 commentsOther: [
@@ -169,7 +173,8 @@
                     '',
                     'food这道菜真的是超级超级推荐,味道超级好',
                     '其中最推荐的还是food这道菜,味道超级好',
-                    'food白柔嫩、肥而不腻、香鲜味美，具有香、酥、嫩的特点。'
+                    'food白柔嫩、肥而不腻、香鲜味美，具有香、酥、嫩的特点。',
+                    '不仅看相好，味道也很不错呢。'
                 ],
                 commentsFood2:[
                     '',
@@ -182,7 +187,8 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.create()
+                        this.create();
+                        this.copy();
                     }
                 });
             },
